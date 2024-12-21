@@ -10,13 +10,14 @@ from winzy_head_tail.tail import tail, tail_command
 
 from argparse import ArgumentParser
 
+
 def test_create_parser():
     subparser = ArgumentParser().add_subparsers()
     parser = w.create_parser_head(subparser)
 
     assert parser is not None
 
-    result = parser.parse_args(['hello'])
+    result = parser.parse_args(["hello"])
     assert result.files == ["hello"]
 
 
@@ -24,7 +25,6 @@ def test_plugin(capsys):
     w.head_plugin.hello(None)
     captured = capsys.readouterr()
     assert "Hello! This is an example ``winzy`` plugin." in captured.out
-
 
 
 @pytest.fixture
@@ -86,6 +86,7 @@ def test_tail_command(test_files):
     assert f"==> {file1} <==\nline4\nline5\n\n" in output.getvalue()
     assert f"==> {file2} <==\ndelta\nepsilon\n\n" in output.getvalue()
 
+
 @pytest.mark.xfail
 def test_head_with_piped_input():
     input_data = "line1\nline2\nline3\nline4\nline5\n"
@@ -99,6 +100,7 @@ def test_head_with_piped_input():
         capture_output=True,
     )
     assert result.stdout == expected_output
+
 
 @pytest.mark.xfail
 def test_tail_with_piped_input():

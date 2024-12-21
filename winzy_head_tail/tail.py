@@ -2,7 +2,6 @@ import sys
 from collections import deque
 
 
-
 def tail(filename=None, n=None, c=None):
     """
     Mimics the Unix `tail` command, with support for piped content.
@@ -14,18 +13,24 @@ def tail(filename=None, n=None, c=None):
     """
     try:
         if filename:
-            source = open(filename, 'rb' if c else 'r')
+            source = open(filename, "rb" if c else "r")
         else:
             source = sys.stdin
 
         with source as file:
             if c:
                 content = file.read()
-                print(content[-c:] if isinstance(content, str) else content.decode('utf-8', errors='replace')[-c:])
+                print(
+                    content[-c:]
+                    if isinstance(content, str)
+                    else content.decode("utf-8", errors="replace")[-c:]
+                )
             else:
-                lines = deque(file if filename else iter(file.readline, ''), maxlen=n or 10)
+                lines = deque(
+                    file if filename else iter(file.readline, ""), maxlen=n or 10
+                )
                 for line in lines:
-                    print(line, end='')
+                    print(line, end="")
     except Exception as e:
         print(f"Error reading file {filename}: {e}")
 
@@ -48,5 +53,3 @@ def tail_command(filenames=None, n=None, c=None):
                 print()
     else:
         tail(n=n, c=c)
-
-    

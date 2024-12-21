@@ -12,20 +12,24 @@ def head(filename=None, n=None, c=None):
     """
     try:
         if filename:
-            source = open(filename, 'rb' if c else 'r')
+            source = open(filename, "rb" if c else "r")
         else:
             source = sys.stdin
 
         with source as file:
             if c:
                 content = file.read()
-                print(content[:c] if isinstance(content, str) else content.decode('utf-8', errors='replace')[:c])
+                print(
+                    content[:c]
+                    if isinstance(content, str)
+                    else content.decode("utf-8", errors="replace")[:c]
+                )
             else:
-                lines = file if filename else iter(file.readline, '')
+                lines = file if filename else iter(file.readline, "")
                 for i, line in enumerate(lines):
                     if i >= (n or 10):
                         break
-                    print(line, end='')
+                    print(line, end="")
     except Exception as e:
         print(f"Error reading file {filename}: {e}")
 
